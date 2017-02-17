@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 public class WordAdapter extends ArrayAdapter<Word> {
 
+    private int mColor;
     /**
      * Custom constructor. Context is used to inflate the layout file and
      * list is the data we want to populate into the lists.
@@ -25,8 +27,9 @@ public class WordAdapter extends ArrayAdapter<Word> {
      * @param context the current context
      * @param wordList a list of Word objects to display in a list
      */
-    public WordAdapter(Activity context, ArrayList<Word> wordList) {
+    public WordAdapter(Activity context, ArrayList<Word> wordList, int color) {
         super(context, 0, wordList);
+        mColor = color;
     }
 
     /**
@@ -45,7 +48,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
-        }
+      }
 
         // Get the {@link Word} object located at this position in the list
         Word currentWord = getItem(position);
@@ -64,6 +67,12 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         // Find the ImageView in the list_item.xml layout with the is image
         ImageView imageView = (ImageView) listItemView.findViewById((R.id.image));
+
+        // Find the LinearLayout id of the TextView column
+        LinearLayout layout = (LinearLayout) listItemView.findViewById(R.id.text_container);
+
+        // Set the background color based on type of activity
+        layout.setBackgroundResource(mColor);
 
         // Check if an image is provided with current Word
         if (currentWord.hasImage()) {
