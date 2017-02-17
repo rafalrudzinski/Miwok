@@ -7,9 +7,11 @@ package com.example.android.miwok;
 
 public class Word {
 
+    private static final int NO_IMAGE_PROVIDED = -1;
+
     private String mDefaultWord;
     private String mMiwokWord;
-    private int mImageResourceId;
+    private int mImageResourceId = NO_IMAGE_PROVIDED;
 
     /**
      * Create a new Word object.
@@ -59,5 +61,14 @@ public class Word {
      * @return image resource id
      */
     public int getImageResourceId() { return mImageResourceId; }
+
+    /**
+     * Flags a Word if it has an image associated with it
+     *
+     * @return true if Word has an image, false otherwise
+     */
+    public boolean hasImage() {
+        return mImageResourceId != NO_IMAGE_PROVIDED;
+    }
 
 }
