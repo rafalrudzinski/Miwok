@@ -19,6 +19,7 @@ public class Word {
      *
      * @param default_word word in english or default app language
      * @param miwok_word word in Miwok language
+     * @param audio_id resource id of audio file associated with this word
      */
     public Word(String default_word, String miwok_word, int audio_id) {
         mDefaultWord = default_word;
@@ -32,6 +33,7 @@ public class Word {
      * @param default_word word in english or default app language
      * @param miwok_word word in Miwok language
      * @param image_id the drawable resource id for the image asset
+     * @param audio_id resource id of audio file associated with this word
      */
     public Word(String default_word, String miwok_word, int image_id, int audio_id) {
         mDefaultWord = default_word;
