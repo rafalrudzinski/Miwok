@@ -83,6 +83,8 @@ public class WordAdapter extends ArrayAdapter<Word> {
             imageView.setVisibility(View.GONE);
         }
 
+
+
         // Return the whole list item layout.
         return listItemView;
     }
