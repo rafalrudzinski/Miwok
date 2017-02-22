@@ -13,9 +13,20 @@ import java.util.ArrayList;
 
 public class NumbersActivity extends AppCompatActivity {
 
+    /** Handles playback of all sound files */
     private MediaPlayer mediaPlayer;
 
-    @Override
+    /**
+     * This listener gets triggered when the {@link MediaPlayer} has completed
+     * playing the audio file
+     */
+    private MediaPlayer.OnCompletionListener mCompletionListner = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
@@ -51,14 +62,16 @@ public class NumbersActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(NumbersActivity.this, word.getmAudioResourceId());
                 mediaPlayer.start();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        releaseMediaPlayer();
-                    }
-                });
+                mediaPlayer.setOnCompletionListener(mCompletionListner);
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        releaseMediaPlayer();
     }
 
     /**

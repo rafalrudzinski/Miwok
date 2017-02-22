@@ -11,7 +11,19 @@ import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
 
+    /** Handles playback of all audio files */
     private MediaPlayer mediaPlayer;
+
+    /**
+     * This listener gets triggered when the {@link MediaPlayer} has completed
+     * playing the audio file
+     */
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +58,16 @@ public class ColorsActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(ColorsActivity.this, word.getmAudioResourceId());
                 mediaPlayer.start();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        releaseMediaPlayer();
-                    }
-                });
+                mediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        releaseMediaPlayer();
     }
 
     /**

@@ -11,9 +11,20 @@ import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
 
+    /** Handles playback of all the sound files */
     private MediaPlayer mediaPlayer;
 
-    @Override
+    /**
+     * This listener gets triggered when the {@link MediaPlayer} has completed
+     * playing the audio file
+     */
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
@@ -48,14 +59,16 @@ public class FamilyActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(FamilyActivity.this, word.getmAudioResourceId());
                 mediaPlayer.start();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        releaseMediaPlayer();
-                    }
-                });
+                mediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        releaseMediaPlayer();
     }
 
     /**
